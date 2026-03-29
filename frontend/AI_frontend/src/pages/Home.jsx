@@ -9,6 +9,7 @@ import rehypeHighlight from 'rehype-highlight';
 import "highlight.js/styles/github-dark.css";
 import axios from 'axios';
 import Markdown from 'react-markdown';
+import ProfileOverlay from '../components/ProfileOverlay';
 
 const Editor = EditorModule.default || EditorModule;
 
@@ -19,6 +20,7 @@ function Home() {
 
   const [review, setReview] = useState(``)
   const [loading, setLoading] = useState(false)
+  const [isProfileOpen, setIsProfileOpen] = useState(false)
 
   async function handleReview() {
     try {
@@ -42,10 +44,21 @@ function Home() {
       <div className="w-full max-w-[95%] xl:max-w-[1400px] mx-auto flex flex-col flex-1 h-full min-h-0">
 
         {/* Header Space */}
-        <header className="mb-5 md:mb-8 px-2 shrink-0">
+        <header className="mb-5 md:mb-8 px-2 shrink-0 flex justify-between items-center">
           <h1 className="text-xl font-semibold text-blue-200 md:text-3xl text-[#E2E8F0] tracking-wide ">
             CODISH Nova.....<span className='text-sm font-medium text-[#7DE7C0]'>AI</span>
           </h1>
+          <button 
+            onClick={() => setIsProfileOpen(true)}
+            className="text-[#E2E8F0] hover:text-[#7DE7C0] transition-colors p-1 cursor-pointer"
+            aria-label="Open profile"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
         </header>
 
         {/* Main Workspace (Flex Col on mobile for dynamic height ratios, Grid on desktop for width ratios) */}
@@ -53,6 +66,8 @@ function Home() {
 
           {/* Left Panel (Review Button) - Mobile: Bottom (flex-[3]), Desktop: Left */}
           <div className="order-2 md:order-1 relative bg-[#34404E] rounded-[1.5rem] border border-white/5 border-t border-t-[#7DE7C0]/40 shadow-2xl flex flex-col p-5 md:p-8 flex-[3] md:flex-none min-h-[25vh] md:h-auto overflow-hidden text-[#E2E8F0]">
+
+            {isProfileOpen && <ProfileOverlay onClose={() => setIsProfileOpen(false)} />}
 
             <div className="absolute top-0 left-0 w-full h-16 bg-gradient-to-b from-[#7DE7C0]/10 to-transparent pointer-events-none z-10"></div>
 
