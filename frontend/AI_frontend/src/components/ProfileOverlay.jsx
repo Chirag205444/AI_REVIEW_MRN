@@ -1,6 +1,19 @@
 import React from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileOverlay = ({ onClose }) => {
+  const navigate = useNavigate();
+  const handleLogout = (e) => {
+    e.preventDefault();
+    axios.post("http://localhost:5000/api/user/logout", {}, { withCredentials: true }).then((res)=>{
+      onClose(); 
+      navigate("/user/login");
+    }).catch((err)=>{
+      console.error("Logout failed");
+    });
+  };
+
   return (
     <>
       {/* Mobile Backdrop - hidden on desktop */}
@@ -49,7 +62,7 @@ const ProfileOverlay = ({ onClose }) => {
           {/* Bottom Actions */}
           <div className="pt-5 border-t border-white/20 flex flex-col-reverse md:flex-row justify-center md:justify-between items-stretch md:items-center shrink-0 gap-3 mt-auto">
             {/* Darker Logout button for mobile */}
-            <button className="px-6 py-3 md:py-2 border border-white/10 rounded-xl hover:bg-black/80 transition-colors text-sm font-medium bg-[#0f131a] md:bg-black/20 text-white shadow-inner">
+            <button onClick={handleLogout} className="px-6 py-3 md:py-2 border border-white/10 rounded-xl hover:bg-black/80 transition-colors text-sm font-medium bg-[#0f131a] md:bg-black/20 text-white shadow-inner">
               Logout
             </button>
             <button 

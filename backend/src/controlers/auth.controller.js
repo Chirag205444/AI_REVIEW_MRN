@@ -3,13 +3,13 @@ const bcrypt=require("bcrypt");
 const jwt=require("jsonwebtoken");
 
 const registerUser=async(req,res)=>{
-    const {username,email,password,recentPromts}=req.body;
+    const {username,email,password}=req.body;
 
     if(!username || !email || !password){
         return res.status(400).json({error:"All fields are required"});
     }
 
-    try{
+   try{
         const doUserExist=await userModel.findOne({email});
         if(doUserExist){
             return res.status(400).json({error:"User already exists"});
@@ -20,8 +20,7 @@ const registerUser=async(req,res)=>{
         const newUser=await userModel.create({
             username,
             email,
-            password:hashedPassword,
-            recentPromts
+            password:hashedPassword
         });
 
         const token=jwt.sign({id:newUser._id},process.env.SECRET_KEY,{expiresIn:"1d"});
@@ -32,7 +31,7 @@ const registerUser=async(req,res)=>{
 
    }catch(err){
         res.status(500).json({error:"Internal server error"});
-    }
+   }
 }
 
 
