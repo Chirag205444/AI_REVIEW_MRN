@@ -4,9 +4,15 @@ import { useNavigate } from 'react-router-dom';
 
 const ProfileOverlay = ({ onClose }) => {
   const navigate = useNavigate();
+  const username = localStorage.getItem('AI_USER') || "UserName";
+  const useremail = localStorage.getItem('AI_U_EMAIL') || "Email";
+
   const handleLogout = (e) => {
     e.preventDefault();
     axios.post("http://localhost:5000/api/user/logout", {}, { withCredentials: true }).then((res)=>{
+      localStorage.removeItem('userLoggedIn');
+      localStorage.removeItem('AI_USER');
+      localStorage.removeItem('AI_U_EMAIL');
       onClose(); 
       navigate("/user/login");
     }).catch((err)=>{
@@ -47,8 +53,8 @@ const ProfileOverlay = ({ onClose }) => {
 
           {/* User Info Section */}
           <div className="flex flex-col items-start md:items-center justify-center pb-6 border-b border-white/20 shrink-0 mt-8 md:mt-0">
-            <h2 className="text-[1.15rem] font-medium tracking-wide mb-2">UserName</h2>
-            <p className="text-sm text-gray-400">Email</p>
+            <h2 className="text-[1.15rem] font-medium tracking-wide mb-2">{username}</h2>
+            <p className="text-sm text-gray-400">{useremail}</p>
           </div>
           
           {/* Scrollable Histories Section */}

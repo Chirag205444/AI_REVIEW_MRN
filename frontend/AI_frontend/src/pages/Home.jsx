@@ -14,9 +14,7 @@ import ProfileOverlay from '../components/ProfileOverlay';
 const Editor = EditorModule.default || EditorModule;
 
 function Home() {
-  const [code, setCode] = useState(`function sum() {
-  return 1 + 1;
-}`)
+  const [code, setCode] = useState(``)
 
   const [review, setReview] = useState(``)
   const [loading, setLoading] = useState(false)
@@ -48,7 +46,7 @@ function Home() {
           <h1 className="text-xl font-semibold text-blue-200 md:text-3xl text-[#E2E8F0] tracking-wide ">
             CODISH Nova.....<span className='text-sm font-medium text-[#7DE7C0]'>AI</span>
           </h1>
-          <button 
+          <button
             onClick={() => setIsProfileOpen(true)}
             className="text-[#E2E8F0] hover:text-[#7DE7C0] transition-colors p-1 cursor-pointer"
             aria-label="Open profile"
