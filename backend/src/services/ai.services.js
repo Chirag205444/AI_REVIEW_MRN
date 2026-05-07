@@ -2,10 +2,11 @@ const { GoogleGenAI } = require("@google/genai");
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY, });
 
-const generateRes=async (prompt)=> {
-     const response = await ai.models.generateContent({
-         model: "gemini-3-flash-preview",
-         systemInstruction: `
+const generateRes = async (prompt) => {
+    try {
+        const response = await ai.models.generateContent({
+            model: "gemini-3-flash-preview",
+            systemInstruction: `
             Name : CODISH
            Senior Code Reviewer (7+ years of experience)
             Role & Responsibilities:
@@ -81,18 +82,22 @@ const generateRes=async (prompt)=> {
             }
             Why this is better: Using async/await makes the code much more readable and ensures the data is actually there before you try to use it. Adding a try/catch block ensures your app doesn't break if the server is down. 🚀
          `,
-         contents:  [
-            {
-                role: "user",
-                parts: [{ text: prompt }],
-            },
-         ], 
+            contents: [
+                {
+                    role: "user",
+                    parts: [{ text: prompt }],
+                },
+            ],
         });
-         const text =
-            response.text || "No output";
+        const text = response.text || "No output";
         return text;
-
+    } catch (error) {
+        if (error.status === 429 || (error.message && (error.message.includes("429") || error.message.toLowerCase().includes("quota") || error.message.toLowerCase().includes("rate limit") || error.message.toLowerCase().includes("exhausted")))) {
+            return "Hey! You've reached today's limit..! Kindly come back tomorrow.";
+        }
+        throw error;
+    }
 }
 
 
-module.exports={generateRes};
+module.exports = { generateRes };

@@ -9,13 +9,13 @@ const ProfileOverlay = ({ onClose }) => {
 
   const handleLogout = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:5000/api/user/logout", {}, { withCredentials: true }).then((res)=>{
+    axios.post("http://localhost:5000/api/user/logout", {}, { withCredentials: true }).then((res) => {
       localStorage.removeItem('userLoggedIn');
       localStorage.removeItem('AI_USER');
       localStorage.removeItem('AI_U_EMAIL');
-      onClose(); 
+      onClose();
       navigate("/user/login");
-    }).catch((err)=>{
+    }).catch((err) => {
       console.error("Logout failed");
     });
   };
@@ -23,8 +23,8 @@ const ProfileOverlay = ({ onClose }) => {
   return (
     <>
       {/* Mobile Backdrop - hidden on desktop */}
-      <div 
-        className="fixed inset-0 bg-black/60 z-[100] md:hidden" 
+      <div
+        className="fixed inset-0 bg-black/60 z-[100] md:hidden"
         onClick={onClose}
       />
 
@@ -36,12 +36,12 @@ const ProfileOverlay = ({ onClose }) => {
       ">
         {/* Top soft gradient matching the editor styling (desktop only, to match editor) */}
         <div className="hidden md:block absolute top-0 left-0 w-full h-16 bg-gradient-to-b from-[#7DE7C0]/10 to-transparent pointer-events-none z-10"></div>
-        
+
         {/* Content wrapper */}
         <div className="relative z-20 flex flex-col h-full w-full p-6 md:p-8 text-left md:text-center">
-          
+
           {/* Close Button (X) at Top Right (Mobile only) */}
-          <button 
+          <button
             onClick={onClose}
             className="absolute top-4 right-4 text-white/50 hover:text-white transition-colors p-1 z-30 md:hidden"
           >
@@ -56,22 +56,22 @@ const ProfileOverlay = ({ onClose }) => {
             <h2 className="text-[1.15rem] font-medium tracking-wide mb-2">{username}</h2>
             <p className="text-sm text-gray-400">{useremail}</p>
           </div>
-          
+
           {/* Scrollable Histories Section */}
           <div className="flex-1 flex flex-col min-h-0 pt-5 pb-6">
             <span className="text-sm font-medium text-white/90 mb-4 block text-left md:text-white/50 md:uppercase md:tracking-wider">Histories</span>
             <div className="flex-1 overflow-y-auto scrollbar-hide flex items-start md:items-center justify-start md:justify-center md:border md:border-white/5 md:rounded-xl md:bg-black/10 text-left">
-               <p className="text-gray-400 text-sm md:text-center">Scrollable area if text is there</p>
+              <p className="text-gray-400 text-sm md:text-center">History is under maintenance</p>
             </div>
           </div>
-          
+
           {/* Bottom Actions */}
           <div className="pt-5 border-t border-white/20 flex flex-col-reverse md:flex-row justify-center md:justify-between items-stretch md:items-center shrink-0 gap-3 mt-auto">
             {/* Darker Logout button for mobile */}
             <button onClick={handleLogout} className="px-6 py-3 md:py-2 border border-white/10 rounded-xl hover:bg-black/80 transition-colors text-sm font-medium bg-[#0f131a] md:bg-black/20 text-white shadow-inner">
               Logout
             </button>
-            <button 
+            <button
               onClick={onClose}
               className="hidden md:block px-6 py-2 border border-white/20 rounded-xl hover:bg-white/10 transition-colors text-sm font-medium bg-black/20"
             >
