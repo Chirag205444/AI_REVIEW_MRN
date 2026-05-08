@@ -21,7 +21,7 @@ function UserRegister() {
   const handleRegister = async (e) => {
      e.preventDefault();
      setErrorMsg('');
-     await axios.post("http://localhost:5000/api/user/register",{
+     await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/register`,{
       username,email,password
      }).then(res=>{
       localStorage.setItem('userLoggedIn', 'true');

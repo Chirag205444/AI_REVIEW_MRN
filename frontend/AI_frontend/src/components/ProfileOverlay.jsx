@@ -9,7 +9,7 @@ const ProfileOverlay = ({ onClose }) => {
 
   const handleLogout = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:5000/api/user/logout", {}, { withCredentials: true }).then((res) => {
+    axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/logout`, {}, { withCredentials: true }).then((res) => {
       localStorage.removeItem('userLoggedIn');
       localStorage.removeItem('AI_USER');
       localStorage.removeItem('AI_U_EMAIL');

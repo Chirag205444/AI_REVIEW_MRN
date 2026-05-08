@@ -23,7 +23,7 @@ function Home() {
   async function handleReview() {
     try {
       setLoading(true)
-      const response = await axios.post("http://localhost:5000/ai/get-response", {
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/ai/get-response`, {
         prompt: code
       })
       setReview(response.data)

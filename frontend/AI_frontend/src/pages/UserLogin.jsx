@@ -20,7 +20,7 @@ function UserLogin() {
   const handleLogin = async (e) => {
     e.preventDefault();
     setErrorMsg('');
-    await axios.post("http://localhost:5000/api/user/login",{
+    await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/login`,{
       email,password
      }).then(res=>{
       console.log(res.data);
